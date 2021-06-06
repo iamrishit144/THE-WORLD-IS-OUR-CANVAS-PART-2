@@ -1424,16 +1424,7 @@ deltaTime = ((now - then) / 1000)/INTERVAL_60; // seconds since last frame
    * @class Sprite
    */
 
-// For details on why these docs aren't in a YUIDoc comment block, see:
-//
-// https://github.com/molleindustria/p5.play/pull/67
-//
-// @param {Number} x Initial x coordinate
-// @param {Number} y Initial y coordinate
-// @param {Number} width Width of the placeholder rectangle and of the
-//                       collider until an image or new collider are set
-// @param {Number} height Height of the placeholder rectangle and of the
-//                        collider until an image or new collider are set
+
 function Sprite(pInst, _x, _y, _w, _h) {
   var pInstBind = createPInstBinder(pInst);
 
@@ -1469,7 +1460,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
   var camera = pInst.camera;
 
 
-  // These are p5 constants that we'd like easy access to.
+ 
   var RGB = p5.prototype.RGB;
   var CENTER = p5.prototype.CENTER;
   var LEFT = p5.prototype.LEFT;
@@ -1584,9 +1575,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
   */
   this.immovable = false;
 
-  //Coefficient of restitution - velocity lost in the bouncing
-  //0 perfectly inelastic , 1 elastic, > 1 hyper elastic
-
+ 
   /**
   * Coefficient of restitution. The velocity lost after bouncing.
   * 1: perfectly elastic, no energy is lost
@@ -1939,7 +1928,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
 
   var animations = {};
 
-  //The current animation's label.
+  
   var currentAnimation = '';
 
   /**
@@ -2123,8 +2112,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
         this._sweptCollider.updateSweptColliderFromSprite(this);
       }
 
-      //if there has been a change somewhere after the last update
-      //the old position is the last position registered in the update
+      
       if(this.newPosition !== this.position)
         this.previousPosition = createVector(this.newPosition.x, this.newPosition.y);
       else
@@ -2149,25 +2137,24 @@ function Sprite(pInst, _x, _y, _w, _h) {
       this.deltaX = this.position.x - this.previousPosition.x;
       this.deltaY = this.position.y - this.previousPosition.y;
 
-      //if there is an animation
+     
       if(animations[currentAnimation])
       {
-        //update it
+        
         animations[currentAnimation].update();
 
         this._syncAnimationSizes(animations, currentAnimation);
       }
 
-      //a collider is created either manually with setCollider or
-      //when I check this sprite for collisions or overlaps
+
       if (this.collider) {
         this.collider.updateFromSprite(this);
       }
 
-      //mouse actions
+      
       if (this.mouseActive)
       {
-        //if no collider set it
+       
           if(!this.collider)
             this.setDefaultCollider();
 
@@ -2180,9 +2167,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
             typeof(this.onMousePressed) === 'function' ||
             typeof(this.onMouseReleased) === 'function')
         {
-          //if a mouse function is set
-          //it's implied we want to have it mouse active so
-          //we do this automatically
+         
           this.mouseActive = true;
 
           //if no collider set it
@@ -2193,7 +2178,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
         }
       }
 
-      //self destruction countdown
+      
       if (this.life>0)
         this.life--;
       if (this.life === 0)
@@ -2228,7 +2213,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
     this.mouseIsOver = false;
     this.mouseIsPressed = false;
 
-    //rollover
+   
     if(this.collider) {
       var mousePosition;
 
@@ -2239,11 +2224,11 @@ function Sprite(pInst, _x, _y, _w, _h) {
 
       this.mouseIsOver = this.collider.overlap(new p5.PointCollider(mousePosition));
 
-      //global p5 var
+    
       if(this.mouseIsOver && (pInst.mouseIsPressed || pInst.touchIsDown))
         this.mouseIsPressed = true;
 
-      //event change - call functions
+     
       if(!mouseWasOver && this.mouseIsOver && this.onMouseOver !== undefined)
         if(typeof(this.onMouseOver) === 'function')
           this.onMouseOver.call(this, this);
@@ -2323,11 +2308,11 @@ function Sprite(pInst, _x, _y, _w, _h) {
   this.setCollider = function(type, offsetX, offsetY, width, height, rotation) {
     var _type = type ? type.toLowerCase() : '';
     if (_type === 'rectangle') {
-      // Map 'rectangle' to AABB.  Change this if you want it to default to OBB.
+     
       _type = 'obb';
     }
 
-    // Check correct arguments, provide context-sensitive usage message if wrong.
+    
     if (!(_type === 'point' || _type === 'circle' || _type === 'obb' || _type === 'aabb')) {
       throw new TypeError('setCollider expects the first argument to be one of "point", "circle", "rectangle", "aabb" or "obb"');
     } else if (_type === 'point' && !(arguments.length === 1 || arguments.length === 3)) {
@@ -2340,7 +2325,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
       throw new TypeError('Usage: setCollider("' + type + '"[, offsetX, offsetY[, width, height[, rotation]]])');
     }
 
-    //var center = this.position;
+   
     var offset = createVector(offsetX, offsetY);
 
     if (_type === 'point') {
@@ -2355,8 +2340,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
 
     this._sweptCollider = new p5.OrientedBoundingBoxCollider();
 
-    // Disabled for Code.org, since perf seems better without the quadtree:
-    // quadTree.insert(this);
+   
   };
 
   /**
@@ -2450,7 +2434,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
       }
       scale(this._getScaleX()*dirX, this._getScaleY()*dirY);
       this.draw();
-      //draw debug info
+      
       pop();
 
 
@@ -2730,10 +2714,7 @@ function Sprite(pInst, _x, _y, _w, _h) {
     if (!this.animation) {
       return;
     }
-    // Normally this just sets the 'playing' flag without changing the animation
-    // frame, which will cause the animation to continue on the next update().
-    // If the animation is non-looping and is stopped at the last frame
-    // we also rewind the animation to the beginning.
+    
     if (!this.animation.looping && !this.animation.playing && this.animation.getFrame() === this.animation.images.length - 1) {
       this.animation.rewind();
     }
