@@ -1,4 +1,4 @@
-var database;
+var database = [];
 var drawing = [];
 var currentPath = [];
 
@@ -44,5 +44,3 @@ function draw(){
 function clearDrawing() {
     drawing = [];
 }
-
-
